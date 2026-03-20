@@ -79,13 +79,13 @@ def filter_courses_logic(category, level, max_price, has_seats):
         result = [c for c in result if (c["seats_left"] > 0) == has_seats]
     return result
 
-# Q1
+# Q1 - Returns a welcome message
 
 @app.get("/")
 def home():
     return {"message": "Welcome to LearnHub Online Courses"}
 
-# Q2
+# Q2 - 
 
 @app.get("/courses")
 def get_courses():
