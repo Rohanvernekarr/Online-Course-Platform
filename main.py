@@ -21,6 +21,8 @@ enrollment_counter = 1
 
 # Models
 
+# Q6 -  Validates student enrollment data (name, course_id, email, payment, coupon, gift
+
 class EnrollRequest(BaseModel):
     student_name: str = Field(..., min_length=2)
     course_id: int = Field(..., gt=0)
@@ -38,7 +40,7 @@ class NewCourse(BaseModel):
     price: int = Field(..., ge=0)
     seats_left: int = Field(..., gt=0)
 
-# Helper Functions
+# Q7 - Helper Functions
 
 def find_course(course_id):
     for c in courses:
