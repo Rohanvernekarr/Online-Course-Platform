@@ -226,7 +226,7 @@ def get_wishlist():
             total_value += c["price"]
     return {"wishlist": wishlist, "total_value": total_value}
 
-# Q15
+# Q15 - DELETE /wishlist/remove/{course_id} removes item, POST /wishlist/enroll-all enrolls all wishlist courses for a student.
 
 @app.delete("/wishlist/remove/{course_id}")
 def remove_wishlist(course_id: int, student_name: str):
@@ -253,7 +253,7 @@ def enroll_all(student_name: str, payment_method: str):
 
     return {"enrolled": enrolled, "total_fee": total}
 
-# Q16
+# Q16 - Searches courses by keyword across title, instructor, and category (case-insensitive)
 
 @app.get("/courses/search")
 def search(keyword: str):
@@ -262,13 +262,13 @@ def search(keyword: str):
               or keyword.lower() in c["category"].lower()]
     return {"results": result, "total": len(result)}
 
-# Q17
+# Q17 - Sorts courses by price, title, or seats_left.
 
 @app.get("/courses/sort")
 def sort(sort_by: str = "price"):
     return sorted(courses, key=lambda x: x.get(sort_by, 0))
 
-# Q18
+# Q18 - Paginates courses with page and limit, returns correct slice
 
 @app.get("/courses/page")
 def paginate(page: int = 1, limit: int = 3):
