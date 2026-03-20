@@ -276,7 +276,7 @@ def paginate(page: int = 1, limit: int = 3):
     end = start + limit
     return {"data": courses[start:end]}
 
-# Q19
+# Q19 -  GET /enrollments/search, /sort, /page for searching, sorting, and paginating enrollments.
 
 @app.get("/enrollments/search")
 def search_enroll(student_name: str):
@@ -291,7 +291,7 @@ def page_enroll(page: int = 1, limit: int = 2):
     start = (page - 1) * limit
     return enrollments[start:start+limit]
 
-# Q20
+# Q20 - Combines keyword search, filters, sorting, and pagination for advanced browsing.
 
 @app.get("/courses/browse")
 def browse(keyword: Optional[str] = None,
