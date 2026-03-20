@@ -103,7 +103,7 @@ def summary():
         "total_seats": sum(c["seats_left"] for c in courses)
     }
 
-# Q3
+# Q3 - Returns details for a specific course or 404 if not found.
 
 @app.get("/courses/{course_id}")
 def get_course(course_id: int):
