@@ -253,7 +253,7 @@ def enroll_all(student_name: str, payment_method: str):
 
     return {"enrolled": enrolled, "total_fee": total}
 
-# Q16 - Searches courses by keyword across title, instructor, and category (case-insensitive)
+# Q16 -Searches courses by keyword across title, instructor, and category (case-insensitive)
 
 @app.get("/courses/search")
 def search(keyword: str):
