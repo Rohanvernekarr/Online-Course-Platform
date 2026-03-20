@@ -262,7 +262,7 @@ def search(keyword: str):
               or keyword.lower() in c["category"].lower()]
     return {"results": result, "total": len(result)}
 
-# Q17 - Sorts courses by price, title, or seats_left.
+# Q17 -Sorts courses by price, title, or seats_left.
 
 @app.get("/courses/sort")
 def sort(sort_by: str = "price"):
