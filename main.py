@@ -92,7 +92,7 @@ def get_courses():
     total_seats = sum(c["seats_left"] for c in courses)
     return {"courses": courses, "total": len(courses), "total_seats": total_seats}
 
-# Q5
+# Q5 - Returns stats: total courses, free courses, most expensive, total seats, category count
 
 @app.get("/courses/summary")
 def summary():
