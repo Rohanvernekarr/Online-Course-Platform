@@ -120,7 +120,7 @@ def get_course(course_id: int):
 def get_enrollments():
     return {"data": enrollments, "total": len(enrollments)}
 
-# Q8 + Q9
+# Q8 + Q9 -Enrolls a student, checks seats, applies discounts, returns enrollment details &  Validates recipient for gift enrollments, records recipient in enrollment
 
 @app.post("/enrollments")
 def enroll(data: EnrollRequest):
