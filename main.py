@@ -112,7 +112,7 @@ def get_course(course_id: int):
         raise HTTPException(404, "Course not found")
     return c
 
-# Q4
+# Q4 - Lists all enrollments and total count
 
 @app.get("/enrollments")
 def get_enrollments():
