@@ -177,7 +177,7 @@ def create_course(data: NewCourse):
     courses.append(new)
     return new
 
-# Q12 - Updates course price/seats, only if provided, returns 404 if not found
+# Q12 -Updates course price/seats, only if provided, returns 404 if not found
 
 @app.put("/courses/{course_id}")
 def update_course(course_id: int, price: Optional[int] = None, seats_left: Optional[int] = None):
