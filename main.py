@@ -85,7 +85,7 @@ def filter_courses_logic(category, level, max_price, has_seats):
 def home():
     return {"message": "Welcome to LearnHub Online Courses"}
 
-# Q2 - 
+# Q2 -  Lists all courses, total count, and total seats available.
 
 @app.get("/courses")
 def get_courses():
