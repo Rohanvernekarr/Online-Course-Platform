@@ -164,7 +164,7 @@ def filter_courses(category: Optional[str] = None,
                    has_seats: Optional[bool] = None):
     return filter_courses_logic(category, level, max_price, has_seats)
 
-# Q11
+# Q11 - Adds new course, validates fields, rejects duplicate titles
 
 @app.post("/courses", status_code=201)
 def create_course(data: NewCourse):
@@ -177,7 +177,7 @@ def create_course(data: NewCourse):
     courses.append(new)
     return new
 
-# Q12
+# Q12 - Updates course price/seats, only if provided, returns 404 if not found
 
 @app.put("/courses/{course_id}")
 def update_course(course_id: int, price: Optional[int] = None, seats_left: Optional[int] = None):
@@ -192,7 +192,7 @@ def update_course(course_id: int, price: Optional[int] = None, seats_left: Optio
 
     return c
 
-# Q13
+# Q13 - Deletes course if no enrollments reference it, else returns error
 
 @app.delete("/courses/{course_id}")
 def delete_course(course_id: int):
@@ -207,7 +207,7 @@ def delete_course(course_id: int):
     courses.remove(c)
     return {"message": "Deleted"}
 
-# Q14
+# Q14 - POST /wishlist/add adds course to wishlist, GET /wishlist returns wishlist and total value
 
 @app.post("/wishlist/add")
 def add_wishlist(student_name: str, course_id: int):
