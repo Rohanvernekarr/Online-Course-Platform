@@ -226,7 +226,7 @@ def get_wishlist():
             total_value += c["price"]
     return {"wishlist": wishlist, "total_value": total_value}
 
-# Q15 - DELETE /wishlist/remove/{course_id} removes item, POST /wishlist/enroll-all enrolls all wishlist courses for a student.
+# Q15 -DELETE /wishlist/remove/{course_id} removes item, POST /wishlist/enroll-all enrolls all wishlist courses for a student.
 
 @app.delete("/wishlist/remove/{course_id}")
 def remove_wishlist(course_id: int, student_name: str):
