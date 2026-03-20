@@ -164,7 +164,7 @@ def filter_courses(category: Optional[str] = None,
                    has_seats: Optional[bool] = None):
     return filter_courses_logic(category, level, max_price, has_seats)
 
-# Q11 - Adds new course, validates fields, rejects duplicate titles
+# Q11 -Adds new course, validates fields, rejects duplicate titles
 
 @app.post("/courses", status_code=201)
 def create_course(data: NewCourse):
