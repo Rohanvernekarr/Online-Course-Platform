@@ -207,7 +207,7 @@ def delete_course(course_id: int):
     courses.remove(c)
     return {"message": "Deleted"}
 
-# Q14 - POST /wishlist/add adds course to wishlist, GET /wishlist returns wishlist and total value
+# Q14 -POST /wishlist/add adds course to wishlist, GET /wishlist returns wishlist and total value
 
 @app.post("/wishlist/add")
 def add_wishlist(student_name: str, course_id: int):
