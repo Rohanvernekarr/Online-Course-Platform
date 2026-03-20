@@ -155,7 +155,7 @@ def enroll(data: EnrollRequest):
     return record
 
 
-# Q10
+# Q10 - Filters courses by category, level, price, and seat availability
 
 @app.get("/courses/filter")
 def filter_courses(category: Optional[str] = None,
