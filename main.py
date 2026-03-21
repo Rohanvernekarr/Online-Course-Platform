@@ -94,8 +94,8 @@ def get_courses():
     total_seats = sum(c["seats_left"] for c in courses)
     return {"courses": courses, "total": len(courses), "total_seats": total_seats}
 
-# Q5 - Returns stats: total courses, free courses, most expensive, total seats, category count
 
+# Q5 - Returns stats: total courses, free courses, most expensive, total seats, category count
 @app.get("/courses/summary")
 def summary():
     return {
@@ -105,8 +105,64 @@ def summary():
         "total_seats": sum(c["seats_left"] for c in courses)
     }
 
-# Q3 - Returns details for a specific course or 404 if not found.
+# Q10 - Filters courses by category, level, price, and seat availability
+@app.get("/courses/filter")
+def filter_courses(category: Optional[str] = None,
+                   level: Optional[str] = None,
+                   max_price: Optional[int] = None,
+                   has_seats: Optional[bool] = None):
+    return filter_courses_logic(category, level, max_price, has_seats)
 
+# Q16 -Searches courses by keyword across title, instructor, and category (case-insensitive)
+@app.get("/courses/search")
+def search(keyword: str):
+    result = [c for c in courses if keyword.lower() in c["title"].lower()
+              or keyword.lower() in c["instructor"].lower()
+              or keyword.lower() in c["category"].lower()]
+    return {"results": result, "total": len(result)}
+
+# Q17 -Sorts courses by price, title, or seats_left.
+@app.get("/courses/sort")
+def sort(sort_by: str = "price"):
+    return sorted(courses, key=lambda x: x.get(sort_by, 0))
+
+# Q18 - Paginates courses with page and limit, returns correct slice
+@app.get("/courses/page")
+def paginate(page: int = 1, limit: int = 3):
+    start = (page - 1) * limit
+    end = start + limit
+    return {"data": courses[start:end]}
+
+# Q20 - Combines keyword search, filters, sorting, and pagination for advanced browsing.
+@app.get("/courses/browse")
+def browse(keyword: Optional[str] = None,
+           category: Optional[str] = None,
+           level: Optional[str] = None,
+           max_price: Optional[int] = None,
+           page: int = 1,
+           limit: int = 3):
+
+    result = courses
+
+    if keyword:
+        result = [c for c in result if keyword.lower() in c["title"].lower()]
+
+    if category:
+        result = [c for c in result if c["category"] == category]
+
+    if level:
+        result = [c for c in result if c["level"] == level]
+
+    if max_price:
+        result = [c for c in result if c["price"] <= max_price]
+
+    start = (page - 1) * limit
+    return {
+        "results": result[start:start+limit],
+        "total": len(result)
+    }
+
+# Q3 - Returns details for a specific course or 404 if not found.
 @app.get("/courses/{course_id}")
 def get_course(course_id: int):
     c = find_course(course_id)
@@ -114,8 +170,13 @@ def get_course(course_id: int):
         raise HTTPException(404, "Course not found")
     return c
 
-# Q4 - Lists all enrollments and total count
 
+# Q19 - Search enrollments by student_name
+@app.get("/enrollments/search")
+def search_enroll(student_name: str):
+    return [e for e in enrollments if student_name.lower() in e["student"].lower()]
+
+# Q4 - Lists all enrollments and total count
 @app.get("/enrollments")
 def get_enrollments():
     return {"data": enrollments, "total": len(enrollments)}
@@ -155,14 +216,7 @@ def enroll(data: EnrollRequest):
     return record
 
 
-# Q10 - Filters courses by category, level, price, and seat availability
 
-@app.get("/courses/filter")
-def filter_courses(category: Optional[str] = None,
-                   level: Optional[str] = None,
-                   max_price: Optional[int] = None,
-                   has_seats: Optional[bool] = None):
-    return filter_courses_logic(category, level, max_price, has_seats)
 
 # Q11 -Adds new course, validates fields, rejects duplicate titles
 
@@ -276,47 +330,3 @@ def paginate(page: int = 1, limit: int = 3):
     end = start + limit
     return {"data": courses[start:end]}
 
-# Q19 -  GET /enrollments/search, /sort, /page for searching, sorting, and paginating enrollments.
-
-@app.get("/enrollments/search")
-def search_enroll(student_name: str):
-    return [e for e in enrollments if student_name.lower() in e["student"].lower()]
-
-@app.get("/enrollments/sort")
-def sort_enroll():
-    return sorted(enrollments, key=lambda x: x["final_fee"])
-
-@app.get("/enrollments/page")
-def page_enroll(page: int = 1, limit: int = 2):
-    start = (page - 1) * limit
-    return enrollments[start:start+limit]
-
-# Q20 - Combines keyword search, filters, sorting, and pagination for advanced browsing.
-
-@app.get("/courses/browse")
-def browse(keyword: Optional[str] = None,
-           category: Optional[str] = None,
-           level: Optional[str] = None,
-           max_price: Optional[int] = None,
-           page: int = 1,
-           limit: int = 3):
-
-    result = courses
-
-    if keyword:
-        result = [c for c in result if keyword.lower() in c["title"].lower()]
-
-    if category:
-        result = [c for c in result if c["category"] == category]
-
-    if level:
-        result = [c for c in result if c["level"] == level]
-
-    if max_price:
-        result = [c for c in result if c["price"] <= max_price]
-
-    start = (page - 1) * limit
-    return {
-        "results": result[start:start+limit],
-        "total": len(result)
-    }
